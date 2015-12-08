@@ -1,7 +1,7 @@
 # Video Quickstart for Node.js
 
 This application should give you a ready-made starting point for writing your
-own messaging apps with Twilio Video. Before we begin, we need to collect
+own video chatting apps with Twilio Video. Before we begin, we need to collect
 all the credentials we need to run the application:
 
 Credential | Description
