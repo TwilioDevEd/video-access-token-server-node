@@ -1,0 +1,30 @@
+{
+  "name": "ipm-quickstart-node",
+  "version": "1.0.0",
+  "description": "Quick Start application template for Twilio IP Messaging on Node.js",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "github.com/TwilioDevEd/ipm-quickstart-node"
+  },
+  "keywords": [
+    "twilio",
+    "messaging",
+    "ip",
+    "messaging",
+    "chat",
+    "real",
+    "time",
+    "diggity"
+  ],
+  "author": "Twilio Developer Education",
+  "license": "MIT",
+  "dependencies": {
+    "dotenv": "^1.2.0",
+    "express": "^4.13.3",
+    "twilio": "^3.0.0-edge"
+  }
+}
