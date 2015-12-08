@@ -1,20 +1,20 @@
 {
-  "name": "ipm-quickstart-node",
+  "name": "video-quickstart-node",
   "version": "1.0.0",
-  "description": "Quick Start application template for Twilio IP Messaging on Node.js",
+  "description": "Quick Start application template for Twilio Video on Node.js",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "github.com/TwilioDevEd/ipm-quickstart-node"
+    "url": "github.com/TwilioDevEd/video-quickstart-node"
   },
   "keywords": [
     "twilio",
-    "messaging",
+    "video",
     "ip",
-    "messaging",
+    "video",
     "chat",
     "real",
     "time",

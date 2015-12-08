@@ -34,13 +34,13 @@ app.get('/token', function(request, response) {
         process.env.TWILIO_API_SECRET
     );
 
-		//assign the generated identity to the token
+    //assign the generated identity to the token
     token.identity = identity;
 		
-		//grant the access token Twilio Video capabilities
-		var grant = new AccessToken.ConversationsGrant();
-		grant.configurationProfileSid = process.env.TWILIO_CONFIGURATION_SID;
-		token.addGrant(grant);
+    //grant the access token Twilio Video capabilities
+    var grant = new AccessToken.ConversationsGrant();
+    grant.configurationProfileSid = process.env.TWILIO_CONFIGURATION_SID;
+    token.addGrant(grant);
 
     // Serialize the token to a JWT string and include it in a JSON response
     response.send({
