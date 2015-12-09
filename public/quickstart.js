@@ -8,8 +8,7 @@ if (!navigator.webkitGetUserMedia && !navigator.mozGetUserMedia) {
   alert('WebRTC is not available in your browser.');
 }
 
-$.getJSON('/token', {
-	    }, function(data) {
+$.getJSON('/token', function(data) {
 
 var accessToken = data.token;
 var identity = data.identity;
@@ -109,4 +108,4 @@ function log(message) {
   document.getElementById('log-content').innerHTML = message;
 };
 
-	});
+  });
