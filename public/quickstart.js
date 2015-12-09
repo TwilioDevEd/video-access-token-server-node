@@ -1,30 +1,29 @@
 var conversationsClient;
 var activeConversation;
 var previewMedia;
+var identity;
 
-// check for WebRTC
+// Check for WebRTC
 if (!navigator.webkitGetUserMedia && !navigator.mozGetUserMedia) {
-  alert('WebRTC is not available in your browser.');
+    alert('WebRTC is not available in your browser.');
 }
 
 $.getJSON('/token', function(data) {
-    var accessToken = data.token;
-    var identity = data.identity;
-    var accessManager = new Twilio.AccessManager(accessToken);
+    identity = data.identity;
+    var accessManager = new Twilio.AccessManager(data.token);
 
-    //Check the browser console to see your generated identity. Send an invite to yourself if you want! 
+    // Check the browser console to see your generated identity. 
+    // Send an invite to yourself if you want! 
     console.log(identity);
 
-    // create a Conversations Client and connect to Twilio
+    // Create a Conversations Client and connect to Twilio
     conversationsClient = new Twilio.Conversations.Client(accessManager);
-    conversationsClient.listen().then(
-    clientConnected,
-    function (error) {
+    conversationsClient.listen().then(clientConnected, function (error) {
         log('Could not connect to Twilio: ' + error.message);
-    }
-);
+    });
+});
 
-// successfully connected!
+// Successfully connected!
 function clientConnected() {
     document.getElementById('invite-controls').style.display = 'block';
     log("Connected to Twilio. Listening for incoming Invites as '" + conversationsClient.identity + "'");
@@ -34,48 +33,48 @@ function clientConnected() {
         invite.accept().then(conversationStarted);
     });
 
-    // bind button to create conversation
+    // Bind button to create conversation
     document.getElementById('button-invite').onclick = function () {
         var inviteTo = document.getElementById('invite-to').value;
 
         if (activeConversation) {
-        // add a participant
-        activeConversation.invite(inviteTo);
-        } else {
-        // create a conversation
-        var options = {};
-        if (previewMedia) {
-            options.localMedia = previewMedia;
+            // Add a participant
+            activeConversation.invite(inviteTo);
+            } else {
+            // Create a conversation
+            var options = {};
+            if (previewMedia) {
+                options.localMedia = previewMedia;
+            }
+            conversationsClient.createConversation(inviteTo, options).then(conversationStarted, function (error) {
+                log('Unable to create conversation');
+                console.error('Unable to create conversation', error);
+            });
         }
-        conversationsClient.createConversation(inviteTo, options).then(
-        conversationStarted,
-        function (error) {
-            log('Unable to create conversation');
-            console.error('Unable to create conversation', error);
-        }
-      );
-    }
-  };
+    };
 };
 
-// conversation is live
+// Conversation is live
 function conversationStarted(conversation) {
     log('In an active Conversation');
     activeConversation = conversation;
-    // draw local video, if not already previewing
+    // Draw local video, if not already previewing
     if (!previewMedia) {
         conversation.localMedia.attach('#local-media');
     }
-    // when a participant joins, draw their video on screen
+
+    // When a participant joins, draw their video on screen
     conversation.on('participantConnected', function (participant) {
         log("Participant '" + participant.identity + "' connected");
         participant.media.attach('#remote-media');
     });
-    // when a participant disconnects, note in log
+
+    // When a participant disconnects, note in log
     conversation.on('participantDisconnected', function (participant) {
         log("Participant '" + participant.identity + "' disconnected");
     });
-    // when the conversation ends, stop capturing local video
+    
+    // When the conversation ends, stop capturing local video
     conversation.on('ended', function (conversation) {
         log("Connected to Twilio. Listening for incoming Invites as '" + conversationsClient.identity + "'");
         conversation.localMedia.stop();
@@ -84,7 +83,7 @@ function conversationStarted(conversation) {
     });
 };
 
-//  local video preview
+//  Local video preview
 document.getElementById('button-preview').onclick = function () {
     if (!previewMedia) {
         previewMedia = new Twilio.Conversations.LocalMedia();
@@ -101,9 +100,8 @@ document.getElementById('button-preview').onclick = function () {
   };
 };
 
-// activity log
+// Activity log
 function log(message) {
     document.getElementById('log-content').innerHTML = message;
 };
 
-});
