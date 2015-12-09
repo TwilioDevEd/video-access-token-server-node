@@ -8,7 +8,6 @@ if (!navigator.webkitGetUserMedia && !navigator.mozGetUserMedia) {
 }
 
 $.getJSON('/token', function(data) {
-
     var accessToken = data.token;
     var identity = data.identity;
     var accessManager = new Twilio.AccessManager(accessToken);
