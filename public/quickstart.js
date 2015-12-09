@@ -36,7 +36,6 @@ function clientConnected() {
     // Bind button to create conversation
     document.getElementById('button-invite').onclick = function () {
         var inviteTo = document.getElementById('invite-to').value;
-
         if (activeConversation) {
             // Add a participant
             activeConversation.invite(inviteTo);
@@ -73,7 +72,7 @@ function conversationStarted(conversation) {
     conversation.on('participantDisconnected', function (participant) {
         log("Participant '" + participant.identity + "' disconnected");
     });
-    
+
     // When the conversation ends, stop capturing local video
     conversation.on('ended', function (conversation) {
         log("Connected to Twilio. Listening for incoming Invites as '" + conversationsClient.identity + "'");
@@ -95,13 +94,11 @@ document.getElementById('button-preview').onclick = function () {
         function (error) {
             console.error('Unable to access local media', error);
             log('Unable to access Camera and Microphone');
-        }
-    );
-  };
+        });
+    };
 };
 
 // Activity log
 function log(message) {
     document.getElementById('log-content').innerHTML = message;
 };
-
