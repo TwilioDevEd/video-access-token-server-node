@@ -51,7 +51,7 @@ function clientConnected() {
             });
         }
     };
-};
+}
 
 // Conversation is live
 function conversationStarted(conversation) {
@@ -80,7 +80,7 @@ function conversationStarted(conversation) {
         conversation.disconnect();
         activeConversation = null;
     });
-};
+}
 
 //  Local video preview
 document.getElementById('button-preview').onclick = function () {
@@ -101,4 +101,4 @@ document.getElementById('button-preview').onclick = function () {
 // Activity log
 function log(message) {
     document.getElementById('log-content').innerHTML = message;
-};
+}
