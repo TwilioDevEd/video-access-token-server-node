@@ -45,7 +45,7 @@ function clientConnected() {
             if (previewMedia) {
                 options.localMedia = previewMedia;
             }
-            conversationsClient.createConversation(inviteTo, options).then(conversationStarted, function (error) {
+            conversationsClient.inviteToConversation(inviteTo, options).then(conversationStarted, function (error) {
                 log('Unable to create conversation');
                 console.error('Unable to create conversation', error);
             });
