@@ -45,3 +45,4 @@ test it you can invite your own identity to video chat with yourself.
 ![screenshot of chat app](http://i.imgur.com/nVR70FQ.png)
 
 ## License
+MIT
