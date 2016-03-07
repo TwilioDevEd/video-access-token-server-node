@@ -74,7 +74,7 @@ function conversationStarted(conversation) {
     });
 
     // When the conversation ends, stop capturing local video
-    conversation.on('ended', function (conversation) {
+    conversation.on('disconnected', function (conversation) {
         log("Connected to Twilio. Listening for incoming Invites as '" + conversationsClient.identity + "'");
         conversation.localMedia.stop();
         conversation.disconnect();
