@@ -22,10 +22,12 @@
   ],
   "author": "Twilio Developer Education",
   "license": "MIT",
-  "engines" : { "node" : ">=4.1.0 <5.5.0" },
+  "engines": {
+    "node": ">=4.1.0 <5.5.0"
+  },
   "dependencies": {
     "dotenv": "^1.2.0",
     "express": "^4.13.3",
-    "twilio": "^3.0.0-edge"
+    "twilio": "^2.9.2"
   }
 }
