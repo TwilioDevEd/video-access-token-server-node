@@ -2,7 +2,8 @@
 
 This application should give you a ready-made starting point for writing your
 own video chatting apps with Twilio Video. Before we begin, we need to collect
-all the credentials we need to run the application:
+all the credentials we need to run the application - note that for your account SID,
+test credentials will not work:
 
 Credential | Description
 ---------- | -----------
