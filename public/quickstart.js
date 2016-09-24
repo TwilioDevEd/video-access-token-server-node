@@ -11,10 +11,9 @@ if (!navigator.webkitGetUserMedia && !navigator.mozGetUserMedia) {
 
 $.getJSON('/token', function (data) {
   identity = data.identity;
-  var accessManager = new Twilio.AccessManager(data.token);
 
   // Create a Conversations Client and connect to Twilio
-  videoClient = new Twilio.Video.Client(accessManager);
+  videoClient = new Twilio.Video.Client(data.token);
   document.getElementById('room-controls').style.display = 'block';
 
   // Bind button to join room
@@ -23,7 +22,7 @@ $.getJSON('/token', function (data) {
     if (roomName) {
       log("Joining room '" + roomName + "'...");
 
-      videoClient.connect(roomName).then(roomJoined,
+      videoClient.connect({ to: roomName}).then(roomJoined,
         function(error) {
           log('Could not connect to Twilio: ' + error.message);
         });
@@ -51,6 +50,11 @@ function roomJoined(room) {
   if (!previewMedia) {
     room.localParticipant.media.attach('#local-media');
   }
+
+  room.participants.forEach(function(participant) {
+    log("Already in Room: '" + participant.identity + "'");
+    participant.media.attach('#remote-media');
+  });
 
   // When a participant joins, draw their video on screen
   room.on('participantConnected', function (participant) {
