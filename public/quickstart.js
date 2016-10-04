@@ -39,7 +39,7 @@ function clientConnected() {
         if (activeConversation) {
             // Add a participant
             activeConversation.invite(inviteTo);
-            } else {
+        } else {
             // Create a conversation
             var options = {};
             if (previewMedia) {
