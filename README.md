@@ -39,8 +39,10 @@ Now we should be all set! Run the application using the `node` command.
 node .
 ```
 
-Your application should now be running at http://localhost:3000. Send an invite to another user and start video chatting! If you just want to 
-test it you can invite your own identity to video chat with yourself. 
+Your application should now be running at http://localhost:3000. Just enter
+the name of the room you want to join and click on 'Join Room'. Then,
+open another tab and join the same room. Now, you should see your own
+video in both the tabs!
 
 ![screenshot of chat app](https://s3.amazonaws.com/com.twilio.prod.twilio-docs/images/video2.original.png)
 
