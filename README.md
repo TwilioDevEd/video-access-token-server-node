@@ -26,7 +26,13 @@ Create a configuration file for your application:
 cp .env.example .env
 ```
 
-Edit `.env` with the four configuration parameters we gathered from above.
+Edit `.env` with the four configuration parameters we gathered from above. Export
+the configuration in this file as system environment variables like so on Unix
+based systems:
+
+```bash
+source .env
+```
 
 Next, we need to install our dependencies from npm:
 
@@ -40,7 +46,7 @@ Now we should be all set! Run the application using the `node` command.
 node .
 ```
 
-Your application should now be running at http://localhost:3000. Send an invite to another user and start video chatting! If you just want to 
+Your application should now be running at [http://localhost:3000](http://localhost:3000). Send an invite to another user and start video chatting! If you just want to 
 test it you can invite your own identity to video chat with yourself. 
 
 ![screenshot of chat app](http://i.imgur.com/nVR70FQ.png)
