@@ -24,8 +24,8 @@
   "license": "MIT",
   "engines" : { "node" : ">=4.1.0 <5.5.0" },
   "dependencies": {
-    "dotenv": "^1.2.0",
-    "express": "^4.13.3",
-    "twilio": "^3.0.0-edge"
+    "dotenv": "2.0.0",
+    "express": "4.14.0",
+    "twilio": "2.11.0"
   }
 }
