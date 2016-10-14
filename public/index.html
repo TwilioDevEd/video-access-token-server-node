@@ -2,7 +2,7 @@
 <html>
 <head>
   <title>Twilio Video - Video Quickstart</title>
-  <link rel="stylesheet" href="https://media.twiliocdn.com/sdk/quickstart/conversations-quickstart.min.css">
+  <link rel="stylesheet" href="site.css">
 </head>
 <body>
   <div id="remote-media"></div>
@@ -12,18 +12,18 @@
       <div id="local-media"></div>
       <button id="button-preview">Preview My Camera</button>
     </div>
-    <div id="invite-controls">
-      <p class="instructions">Invite another Video Client</p>
-      <input id="invite-to" type="text" placeholder="Identity to send an invite to" />
-      <button id="button-invite">Send Invite</button>
+    <div id="room-controls">
+      <p class="instructions">Room Name:</p>
+      <input id="room-name" type="text" placeholder="Enter a room name" />
+      <button id="button-join">Join Room</button>
+      <button id="button-leave">Leave Room</button>
     </div>
-    <div id="log">
-      <p>&gt;&nbsp;<span id="log-content">Preparing to listen</span>...</p>
-    </div>
-  </div><!-- /controls -->
-  <script type="text/javascript" src="https://code.jquery.com/jquery-1.7.1.min.js"></script>
-  <script src="https://media.twiliocdn.com/sdk/js/common/v0.1/twilio-common.min.js"></script>
-  <script src="https://media.twiliocdn.com/sdk/js/conversations/v0.13/twilio-conversations.min.js"></script>
+    <div id="log"></div>
+  </div>
+
+  <script src="//media.twiliocdn.com/sdk/js/common/v0.1/twilio-common.min.js"></script>
+  <script src="//media.twiliocdn.com/sdk/js/video/releases/1.0.0-beta1/twilio-video.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
   <script src="quickstart.js"></script>
 </body>
 </html>

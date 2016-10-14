@@ -1,104 +1,120 @@
-var conversationsClient;
-var activeConversation;
+var videoClient;
+var activeRoom;
 var previewMedia;
 var identity;
+var roomName;
 
 // Check for WebRTC
 if (!navigator.webkitGetUserMedia && !navigator.mozGetUserMedia) {
-    alert('WebRTC is not available in your browser.');
+  alert('WebRTC is not available in your browser.');
 }
 
-$.getJSON('/token', function(data) {
-    identity = data.identity;
-    var accessManager = new Twilio.AccessManager(data.token);
+// When we are about to transition away from this page, disconnect
+// from the room, if joined.
+window.addEventListener('beforeunload', leaveRoomIfJoined);
 
-    // Check the browser console to see your generated identity. 
-    // Send an invite to yourself if you want! 
-    console.log(identity);
+$.getJSON('/token', function (data) {
+  identity = data.identity;
 
-    // Create a Conversations Client and connect to Twilio
-    conversationsClient = new Twilio.Conversations.Client(accessManager);
-    conversationsClient.listen().then(clientConnected, function (error) {
-        log('Could not connect to Twilio: ' + error.message);
-    });
+  // Create a Conversations Client and connect to Twilio
+  videoClient = new Twilio.Video.Client(data.token);
+  document.getElementById('room-controls').style.display = 'block';
+
+  // Bind button to join room
+  document.getElementById('button-join').onclick = function () {
+    roomName = document.getElementById('room-name').value;
+    if (roomName) {
+      log("Joining room '" + roomName + "'...");
+
+      videoClient.connect({ to: roomName}).then(roomJoined,
+        function(error) {
+          log('Could not connect to Twilio: ' + error.message);
+        });
+    } else {
+      alert('Please enter a room name.');
+    }
+  };
+
+  // Bind button to leave room
+  document.getElementById('button-leave').onclick = function () {
+    log('Leaving room...');
+    activeRoom.disconnect();
+  };
 });
 
 // Successfully connected!
-function clientConnected() {
-    document.getElementById('invite-controls').style.display = 'block';
-    log("Connected to Twilio. Listening for incoming Invites as '" + conversationsClient.identity + "'");
+function roomJoined(room) {
+  activeRoom = room;
 
-    conversationsClient.on('invite', function (invite) {
-        log('Incoming invite from: ' + invite.from);
-        invite.accept().then(conversationStarted);
+  log("Joined as '" + identity + "'");
+  document.getElementById('button-join').style.display = 'none';
+  document.getElementById('button-leave').style.display = 'inline';
+
+  // Draw local video, if not already previewing
+  if (!previewMedia) {
+    room.localParticipant.media.attach('#local-media');
+  }
+
+  room.participants.forEach(function(participant) {
+    log("Already in Room: '" + participant.identity + "'");
+    participant.media.attach('#remote-media');
+  });
+
+  // When a participant joins, draw their video on screen
+  room.on('participantConnected', function (participant) {
+    log("Joining: '" + participant.identity + "'");
+    participant.media.attach('#remote-media');
+
+    participant.on('disconnected', function (participant) {
+      log("Participant '" + participant.identity + "' left the room");
     });
+  });
 
-    // Bind button to create conversation
-    document.getElementById('button-invite').onclick = function () {
-        var inviteTo = document.getElementById('invite-to').value;
-        if (activeConversation) {
-            // Add a participant
-            activeConversation.invite(inviteTo);
-        } else {
-            // Create a conversation
-            var options = {};
-            if (previewMedia) {
-                options.localMedia = previewMedia;
-            }
-            conversationsClient.inviteToConversation(inviteTo, options).then(conversationStarted, function (error) {
-                log('Unable to create conversation');
-                console.error('Unable to create conversation', error);
-            });
-        }
-    };
-}
+  // When a participant disconnects, note in log
+  room.on('participantDisconnected', function (participant) {
+    log("Participant '" + participant.identity + "' left the room");
+    participant.media.detach();
+  });
 
-// Conversation is live
-function conversationStarted(conversation) {
-    log('In an active Conversation');
-    activeConversation = conversation;
-    // Draw local video, if not already previewing
-    if (!previewMedia) {
-        conversation.localMedia.attach('#local-media');
-    }
-
-    // When a participant joins, draw their video on screen
-    conversation.on('participantConnected', function (participant) {
-        log("Participant '" + participant.identity + "' connected");
-        participant.media.attach('#remote-media');
+  // When the conversation ends, stop capturing local video
+  // Also remove media for all remote participants
+  room.on('disconnected', function () {
+    log('Left');
+    room.localParticipant.media.detach();
+    room.participants.forEach(function(participant) {
+      participant.media.detach();
     });
-
-    // When a participant disconnects, note in log
-    conversation.on('participantDisconnected', function (participant) {
-        log("Participant '" + participant.identity + "' disconnected");
-    });
-
-    // When the conversation ends, stop capturing local video
-    conversation.on('disconnected', function (conversation) {
-        log("Connected to Twilio. Listening for incoming Invites as '" + conversationsClient.identity + "'");
-        conversation.localMedia.stop();
-        conversation.disconnect();
-        activeConversation = null;
-    });
+    activeRoom = null;
+    document.getElementById('button-join').style.display = 'inline';
+    document.getElementById('button-leave').style.display = 'none';
+  });
 }
 
 //  Local video preview
 document.getElementById('button-preview').onclick = function () {
-    if (!previewMedia) {
-        previewMedia = new Twilio.Conversations.LocalMedia();
-        Twilio.Conversations.getUserMedia().then(
-        function (mediaStream) {
-            previewMedia.addStream(mediaStream);
-            previewMedia.attach('#local-media');
-        },
-        function (error) {
-            console.error('Unable to access local media', error);
-            log('Unable to access Camera and Microphone');
-        });
-    };
+  if (!previewMedia) {
+    previewMedia = new Twilio.Video.LocalMedia();
+    Twilio.Video.getUserMedia().then(
+    function (mediaStream) {
+      previewMedia.addStream(mediaStream);
+      previewMedia.attach('#local-media');
+    },
+    function (error) {
+      console.error('Unable to access local media', error);
+      log('Unable to access Camera and Microphone');
+    });
+  };
 };
 
 // Activity log
 function log(message) {
-    document.getElementById('log-content').innerHTML = message;
+  var logDiv = document.getElementById('log');
+  logDiv.innerHTML += '<p>&gt;&nbsp;' + message + '</p>';
+  logDiv.scrollTop = logDiv.scrollHeight;
+}
+
+function leaveRoomIfJoined() {
+  if (activeRoom) {
+    activeRoom.disconnect();
+  }
 }

@@ -1,16 +1,15 @@
 # Video Quickstart for Node.js
 
 This application should give you a ready-made starting point for writing your
-own video chatting apps with Twilio Video. Before we begin, we need to collect
-all the credentials we need to run the application - note that for your account SID,
-test credentials will not work:
+own video apps with Twilio Video. Before we begin, we need to collect
+all the config values we need to run the application:
 
-Credential | Description
----------- | -----------
-Twilio Account SID | Your main Twilio account identifier - [find it on your dashboard](https://www.twilio.com/console).
-Twilio Video Configuration SID | Adds video capability to the access token - [generate one here](https://www.twilio.com/console/video/profiles)
-API Key | Used to authenticate - [generate one here](https://www.twilio.com/console/dev-tools/api-keys).
-API Secret | Used to authenticate - [just like the above, you'll get one here](https://www.twilio.com/console/dev-tools/api-keys).
+| Config Value  | Description |
+| :-------------  |:------------- |
+Configuration Profile SID | Identifier for a set of config properties for your video application - [find yours here](https://www.twilio.com/console/video/profiles).
+Account SID | Your primary Twilio account identifier - find this [in the console here](https://www.twilio.com/console).
+API Key | Used to authenticate - [generate one here](https://www.twilio.com/console/video/dev-tools/api-keys).
+API Secret | Used to authenticate - [just like the above, you'll get one here](https://www.twilio.com/console/video/dev-tools/api-keys).
 
 ## A Note on API Keys
 
@@ -40,10 +39,17 @@ Now we should be all set! Run the application using the `node` command.
 node .
 ```
 
+<<<<<<< HEAD
+Your application should now be running at http://localhost:3000. Just enter
+the name of the room you want to join and click on 'Join Room'. Then,
+open another tab and join the same room. Now, you should see your own
+video in both the tabs!
+=======
 Your application should now be running at [http://localhost:3000](http://localhost:3000). Send an invite to another user and start video chatting! If you just want to 
 test it you can invite your own identity to video chat with yourself. 
+>>>>>>> master
 
-![screenshot of chat app](http://i.imgur.com/nVR70FQ.png)
+![screenshot of chat app](https://s3.amazonaws.com/com.twilio.prod.twilio-docs/images/video2.original.png)
 
 ## License
 MIT
