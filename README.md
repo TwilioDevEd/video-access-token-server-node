@@ -39,7 +39,7 @@ Now we should be all set! Run the application using the `node` command.
 node .
 ```
 
-Your application should now be running at http://localhost:3000. Just enter
+Your application should now be running at [http://localhost:3000](http://localhost:3000). Just enter
 the name of the room you want to join and click on 'Join Room'. Then,
 open another tab and join the same room. Now, you should see your own
 video in both the tabs!
