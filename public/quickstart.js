@@ -16,7 +16,7 @@ window.addEventListener('beforeunload', leaveRoomIfJoined);
 $.getJSON('/token', function (data) {
   identity = data.identity;
 
-  // Create a Conversations Client and connect to Twilio
+  // Create a Video Client and connect to Twilio
   videoClient = new Twilio.Video.Client(data.token);
   document.getElementById('room-controls').style.display = 'block';
 
@@ -64,10 +64,6 @@ function roomJoined(room) {
   room.on('participantConnected', function (participant) {
     log("Joining: '" + participant.identity + "'");
     participant.media.attach('#remote-media');
-
-    participant.on('disconnected', function (participant) {
-      log("Participant '" + participant.identity + "' left the room");
-    });
   });
 
   // When a participant disconnects, note in log
@@ -76,7 +72,7 @@ function roomJoined(room) {
     participant.media.detach();
   });
 
-  // When the conversation ends, stop capturing local video
+  // When we are disconnected, stop capturing local video
   // Also remove media for all remote participants
   room.on('disconnected', function () {
     log('Left');
