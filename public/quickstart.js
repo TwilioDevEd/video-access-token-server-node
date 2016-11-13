@@ -99,7 +99,7 @@ document.getElementById('button-preview').onclick = function () {
       console.error('Unable to access local media', error);
       log('Unable to access Camera and Microphone');
     });
-  };
+  }
 };
 
 // Activity log
