@@ -12,11 +12,7 @@ function attachMedia(tracks, container) {
 }
 
 function attachParticipantMedia(participant, container) {
-  Array.from(participant.tracks.values()).map(function(track) {
-    return track.attach();
-  }).forEach(function(mediaElement) {
-    container.appendChild(mediaElement);
-  });
+  attachMedia(Array.from(participant.tracks.values()), container);
 }
 
 function detachMedia(tracks) {
@@ -30,13 +26,7 @@ function detachMedia(tracks) {
 }
 
 function detachParticipantMedia(participant) {
-  Array.from(participant.tracks.values()).map(function(track) {
-    return track.detach();
-  }).forEach(function(mediaElements) {
-    mediaElements.forEach(function(mediaElement) {
-      mediaElement.remove();
-    });
-  });
+  detachMedia(Array.from(participant.tracks.values()));
 }
 
 // Check for WebRTC
@@ -59,12 +49,12 @@ $.getJSON('/token', function(data) {
     if (roomName) {
       log("Joining room '" + roomName + "'...");
 
-      var connectOptions = { name: roomName, token: data.token };
+      var connectOptions = { name: roomName, logLevel: 'debug' };
       if (previewTracks) {
         connectOptions.tracks = previewTracks;
       }
 
-      Twilio.Video.connect(connectOptions).then(roomJoined, function(error) {
+      Twilio.Video.connect(data.token, connectOptions).then(roomJoined, function(error) {
         log('Could not connect to Twilio: ' + error.message);
       });
     } else {
@@ -88,8 +78,8 @@ function roomJoined(room) {
   document.getElementById('button-leave').style.display = 'inline';
 
   // Draw local video, if not already previewing
-  if (!previewTracks) {
-    var previewContainer = document.getElementById('local-media');
+  var previewContainer = document.getElementById('local-media');
+  if (!previewContainer.querySelector('video')) {
     attachParticipantMedia(room.localParticipant, previewContainer);
   }
 
@@ -135,16 +125,20 @@ function roomJoined(room) {
 
 //  Local video preview
 document.getElementById('button-preview').onclick = function() {
-  if (!previewTracks) {
-    Twilio.Video.createLocalTracks().then(function(tracks) {
-      previewTracks = tracks;
-      var previewContainer = document.getElementById('local-media');
+  var localTracksPromise = previewTracks
+    ? Promise.resolve(previewTracks)
+    : Twilio.Video.createLocalTracks();
+
+  localTracksPromise.then(function(tracks) {
+    previewTracks = tracks;
+    var previewContainer = document.getElementById('local-media');
+    if (!previewContainer.querySelector('video')) {
       attachMedia(tracks, previewContainer);
-    }, function(error) {
-      console.error('Unable to access local media', error);
-      log('Unable to access Camera and Microphone');
-    });
-  }
+    }
+  }, function(error) {
+    console.error('Unable to access local media', error);
+    log('Unable to access Camera and Microphone');
+  });
 };
 
 // Activity log
