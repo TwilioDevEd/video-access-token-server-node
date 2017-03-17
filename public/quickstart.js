@@ -3,30 +3,28 @@ var previewTracks;
 var identity;
 var roomName;
 
-function attachMedia(tracks, container) {
-  tracks.map(function(track) {
-    return track.attach();
-  }).forEach(function(mediaElement) {
-    container.appendChild(mediaElement);
+function attachTracks(tracks, container) {
+  tracks.forEach(function(track) {
+    container.appendChild(track.attach());
   });
 }
 
-function attachParticipantMedia(participant, container) {
-  attachMedia(Array.from(participant.tracks.values()), container);
+function attachParticipantTracks(participant, container) {
+  var tracks = Array.from(participant.tracks.values());
+  attachTracks(tracks, container);
 }
 
-function detachMedia(tracks) {
-  tracks.map(function(track) {
-    return track.detach();
-  }).forEach(function(mediaElements) {
-    mediaElements.forEach(function(mediaElement) {
-      mediaElement.remove();
+function detachTracks(tracks) {
+  tracks.forEach(function(track) {
+    track.detach().forEach(function(detachedElement) {
+      detachedElement.remove();
     });
   });
 }
 
-function detachParticipantMedia(participant) {
-  detachMedia(Array.from(participant.tracks.values()));
+function detachParticipantTracks(participant) {
+  var tracks = Array.from(participant.tracks.values());
+  detachTracks(tracks);
 }
 
 // Check for WebRTC
@@ -80,13 +78,13 @@ function roomJoined(room) {
   // Draw local video, if not already previewing
   var previewContainer = document.getElementById('local-media');
   if (!previewContainer.querySelector('video')) {
-    attachParticipantMedia(room.localParticipant, previewContainer);
+    attachParticipantTracks(room.localParticipant, previewContainer);
   }
 
   room.participants.forEach(function(participant) {
     log("Already in Room: '" + participant.identity + "'");
     var previewContainer = document.getElementById('remote-media');
-    attachParticipantMedia(participant, previewContainer);
+    attachParticipantTracks(participant, previewContainer);
   });
 
   // When a participant joins, draw their video on screen
@@ -97,26 +95,26 @@ function roomJoined(room) {
   room.on('trackAdded', function(track, participant) {
     log(participant.identity + " added track: " + track.kind);
     var previewContainer = document.getElementById('remote-media');
-    attachMedia([track], previewContainer);
+    attachTracks([track], previewContainer);
   });
 
   room.on('trackRemoved', function(track, participant) {
     log(participant.identity + " removed track: " + track.kind);
-    detachMedia([track]);
+    detachTracks([track]);
   });
 
   // When a participant disconnects, note in log
   room.on('participantDisconnected', function(participant) {
     log("Participant '" + participant.identity + "' left the room");
-    detachParticipantMedia(participant);
+    detachParticipantTracks(participant);
   });
 
   // When we are disconnected, stop capturing local video
   // Also remove media for all remote participants
   room.on('disconnected', function() {
     log('Left');
-    detachParticipantMedia(room.localParticipant);
-    room.participants.forEach(detachParticipantMedia);
+    detachParticipantTracks(room.localParticipant);
+    room.participants.forEach(detachParticipantTracks);
     activeRoom = null;
     document.getElementById('button-join').style.display = 'inline';
     document.getElementById('button-leave').style.display = 'none';
@@ -133,7 +131,7 @@ document.getElementById('button-preview').onclick = function() {
     previewTracks = tracks;
     var previewContainer = document.getElementById('local-media');
     if (!previewContainer.querySelector('video')) {
-      attachMedia(tracks, previewContainer);
+      attachTracks(tracks, previewContainer);
     }
   }, function(error) {
     console.error('Unable to access local media', error);
