@@ -1,14 +1,14 @@
 {
-  "name": "video-quickstart-node",
+  "name": "video-access-token-server-node",
   "version": "1.0.0",
-  "description": "Quick Start application template for Twilio Video on Node.js",
+  "description": "Video Access Token Server for Node.js",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "github.com/TwilioDevEd/video-quickstart-node"
+    "url": "github.com/TwilioDevEd/video-access-token-server-node"
   },
   "keywords": [
     "twilio",
@@ -28,6 +28,6 @@
   "dependencies": {
     "dotenv": "^1.2.0",
     "express": "^4.13.3",
-    "twilio": "^2.9.2"
+    "twilio": "3.0.0-rc.16"
   }
 }
