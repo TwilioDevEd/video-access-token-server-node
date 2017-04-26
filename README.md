@@ -1,5 +1,7 @@
 # Video Access Token Server for Node.js
 
+Looking for the JavaScript Video Quickstart? It has been moved [https://github.com/twilio/video-quickstart-js](https://github.com/twilio/video-quickstart-js).
+
 This server-side application demonstrates generating Access Token for Twilio Video.
 Before we begin, we need to collect
 all the config values we need to run the application:
@@ -20,7 +22,7 @@ When you generate an API key pair at the URLs above, your API Secret will only
 be shown once - make sure to save this in a secure location, 
 or possibly your `~/.bash_profile`.
 
-## Setting Up The Node.js Application
+## Setting up the Node.js Application
 
 Create a configuration file for your application:
 
@@ -28,7 +30,7 @@ Create a configuration file for your application:
 cp .env.example .env
 ```
 
-Edit `.env` with the four configuration parameters we gathered from above.
+Edit `.env` with the three configuration parameters we gathered from above.
 
 Next, we need to install our dependencies from npm:
 
