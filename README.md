@@ -10,6 +10,10 @@ Account SID | Your primary Twilio account identifier - find this [in the console
 API Key | Used to authenticate - [generate one here](https://www.twilio.com/console/video/dev-tools/api-keys).
 API Secret | Used to authenticate - [just like the above, you'll get one here](https://www.twilio.com/console/video/dev-tools/api-keys).
 
+
+#### Looking for the JavaScript Video Quickstart? 
+It has been moved [here](https://github.com/twilio/video-quickstart-js).
+
 ## A Note on API Keys
 
 When you generate an API key pair at the URLs above, your API Secret will only
