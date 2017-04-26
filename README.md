@@ -1,6 +1,6 @@
 # Video Access Token Server for Node.js
 
-Looking for the JavaScript Video Quickstart? It has been moved [https://github.com/twilio/video-quickstart-js](https://github.com/twilio/video-quickstart-js).
+#### Looking for the JavaScript Video Quickstart? It has been moved [here](https://github.com/twilio/video-quickstart-js).
 
 This server-side application demonstrates generating Access Token for Twilio Video.
 Before we begin, we need to collect
@@ -12,9 +12,6 @@ Account SID | Your primary Twilio account identifier - find this [in the console
 API Key | Used to authenticate - [generate one here](https://www.twilio.com/console/video/dev-tools/api-keys).
 API Secret | Used to authenticate - [just like the above, you'll get one here](https://www.twilio.com/console/video/dev-tools/api-keys).
 
-
-#### Looking for the JavaScript Video Quickstart? 
-It has been moved [here](https://github.com/twilio/video-quickstart-js).
 
 ## A Note on API Keys
 
