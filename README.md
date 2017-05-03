@@ -1,4 +1,9 @@
+<a href="https://www.twilio.com">
+  <img src="https://static0.twilio.com/marketing/bundles/marketing/img/logos/wordmark-red.svg" alt="Twilio" width="250" />
+</a>
+
 # Video Access Token Server for Node.js
+[![Build Status](https://travis-ci.org/TwilioDevEd/video-quickstart-node.svg?branch=master)](https://travis-ci.org/TwilioDevEd/video-quickstart-node)
 
 #### Looking for the JavaScript Video Quickstart? It has been moved [here](https://github.com/twilio/video-quickstart-js).
 
@@ -16,7 +21,7 @@ API Secret | Used to authenticate - [just like the above, you'll get one here](h
 ## A Note on API Keys
 
 When you generate an API key pair at the URLs above, your API Secret will only
-be shown once - make sure to save this in a secure location, 
+be shown once - make sure to save this in a secure location,
 or possibly your `~/.bash_profile`.
 
 ## Setting up the Node.js Application
@@ -41,8 +46,17 @@ Now we should be all set! Run the application using the `node` command.
 node .
 ```
 
-To generate Access Token, visit [http://localhost:3000?identity=alice&room=example](http://localhost:3000?identity=alice&room=example).
+To generate Access Token, visit
+[http://localhost:3000?identity=alice&room=example](http://localhost:3000?identity=alice&room=example).
 
+### Run tests
 
-## License
-MIT
+```bash
+npm test
+```
+
+## Meta
+
+* No warranty expressed or implied. Software is as is. Diggity.
+* [MIT License](http://www.opensource.org/licenses/mit-license.html)
+* Lovingly crafted by Twilio Developer Education.
