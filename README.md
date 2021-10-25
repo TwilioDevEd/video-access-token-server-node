@@ -3,7 +3,7 @@
 </a>
 
 # Video Access Token Server for Node.js
-[![Build Status](https://travis-ci.org/TwilioDevEd/video-quickstart-node.svg?branch=master)](https://travis-ci.org/TwilioDevEd/video-quickstart-node)
+[![Node.js CI](https://github.com/TwilioDevEd/video-access-token-server-node/actions/workflows/node.js.yml/badge.svg)](https://github.com/TwilioDevEd/video-access-token-server-node/actions/workflows/node.js.yml)
 
 #### Looking for the JavaScript Video Quickstart? It has been moved [here](https://github.com/twilio/video-quickstart-js).
 
