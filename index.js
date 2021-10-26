@@ -11,9 +11,21 @@ const app = express();
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.get('/', function(request, response) {
+  asddw();
   const identity = request.query.identity || 'identity';
   const room = request.query.room;
   response.send(tokenGenerator(identity, room));
+});
+
+// production error handler
+// no stacktraces leaked to user
+app.use(function(err, req, res, next) {
+  console.trace(err);
+  res.status(err.status || 500);
+  res.send({
+    message: err.message,
+    error: {},
+  });
 });
 
 // Create an http server and run it
