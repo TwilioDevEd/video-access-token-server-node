@@ -11,7 +11,6 @@ const app = express();
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.get('/', function(request, response) {
-  asddw();
   const identity = request.query.identity || 'identity';
   const room = request.query.room;
   response.send(tokenGenerator(identity, room));
